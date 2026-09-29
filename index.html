@@ -246,7 +246,7 @@ footer .cap{font-size:10px}
       <ul class="songs" id="songs"></ul>
     </div>
     <aside class="board">
-      <div class="col-head cap"><span>The Room's Top Picks</span><span>Live</span></div>
+      <div class="col-head cap"><span>The Room&#39;s Top 5</span><span>Live</span></div>
       <div class="top3" id="podium"></div>
       <div class="rest" id="bars"></div>
       <div class="tally cap" id="total"></div>
@@ -342,12 +342,12 @@ function render(){
     li.querySelector('.c').textContent=c[id]||0;
   });
   const ranked=SONGS.map((n,i)=>({n,id:IDS[i],v:c[IDS[i]]||0,i})).sort((a,b)=>b.v-a.v||a.i-b.i);
-  const top=ranked.filter(r=>r.v>0).slice(0,3);
-  document.getElementById('podium').innerHTML=[0,1,2].map(k=>top[k]
+  const top=ranked.filter(r=>r.v>0).slice(0,5);
+  document.getElementById('podium').innerHTML=[0,1,2,3,4].map(k=>top[k]
     ?`<div class="pick${k===0?' first':''}"><span class="rk">0${k+1}</span><span class="nm">${esc(top[k].n)}</span><span class="vv">${vt(top[k].v)}</span></div>`
     :`<div class="pick empty${k===0?' first':''}"><span class="rk">0${k+1}</span><span class="nm">To be decided</span><span class="vv"></span></div>`).join('');
   const max=Math.max(1,...ranked.map(r=>r.v));
-  document.getElementById('bars').innerHTML=ranked.slice(3).map(r=>`<div class="row"><span>${esc(r.n)}</span><span class="n">${r.v}</span><div class="ln"><b style="width:${r.v/max*100}%"></b></div></div>`).join('');
+  document.getElementById('bars').innerHTML=ranked.slice(5).map(r=>`<div class="row"><span>${esc(r.n)}</span><span class="n">${r.v}</span><div class="ln"><b style="width:${r.v/max*100}%"></b></div></div>`).join('');
   const voters=new Set(Object.keys(state).filter(u=>Object.values(state[u]).some(x=>x.v)));
   if(Object.keys(mine).length)voters.add(VOTER);
   const total=Object.values(c).reduce((a,b)=>a+b,0);
